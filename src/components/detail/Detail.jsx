@@ -66,7 +66,10 @@ function Detail() {
             <img src="./arrowUp.png" alt="" />
           </div>
         </div>
-        <button>Block User</button>
+        <div className="buttons">
+          <button>Block User</button>
+          <button className="logOut">Log Out</button>
+        </div>
       </div>
     </div>
   );
