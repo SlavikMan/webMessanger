@@ -6,9 +6,9 @@ import Detail from "./components/detail/Detail";
 function App() {
   return (
     <div className="container">
-      <List />
-      <Chat />
       <Detail />
+      <Chat />
+      <List />
     </div>
   );
 }
