@@ -5,21 +5,24 @@ import Detail from "./components/detail/Detail";
 import Login from "./components/login/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./lib/firebase";
+import { useUserStore } from "./lib/userStore";
 
 function App() {
-  const user = false;
+  const { currentUser, fetchUserInfo } = useUserStore();
+
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
-      console.log(user);
+      fetchUserInfo(user.uid);
     });
 
     return () => {
       unSub();
     };
-  }, []);
+  }, [fetchUserInfo]);
+
   return (
     <div className="container">
-      {user ? (
+      {currentUser ? (
         <>
           <Detail />
           <Chat />
