@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .user {
     display: flex;
     align-items: center;
@@ -22,6 +23,27 @@
       width: 20px;
       height: 20px;
       cursor: pointer;
+    }
+  }
+  button {
+    padding: 10px 20px;
+    background-color: rgb(232, 63, 63);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(214, 22, 22);
+    }
+
+    &.logOut {
+      padding: 10px;
+      background-color: rgba(87, 20, 232, 0.591);
+    }
+
+    &.logOut:hover {
+      background-color: rgba(67, 16, 177, 0.591);
     }
   }
 }

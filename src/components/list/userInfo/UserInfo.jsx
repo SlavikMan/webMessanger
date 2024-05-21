@@ -1,6 +1,7 @@
 import React from "react";
 import "./userInfo.css";
 import { useUserStore } from "../../../lib/userStore";
+import { auth } from "../../../lib/firebase";
 
 function UserInfo() {
   const { currentUser } = useUserStore();
@@ -11,11 +12,14 @@ function UserInfo() {
         <img src={currentUser.avatar || "./avatar.png"} alt="" />
         <h2>{currentUser.username}</h2>
       </div>
-      <div className="icons">
+      {/* <div className="icons">
         <img src="./more.png" alt="" />
         <img src="./video.png" alt="" />
         <img src="./edit.png" alt="" />
-      </div>
+      </div> */}
+      <button className="logOut" onClick={() => auth.signOut()}>
+        Log Out
+      </button>
     </div>
   );
 }
