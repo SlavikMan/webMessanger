@@ -37,7 +37,7 @@ function Detail() {
   return (
     <div className="detail">
       <div className="user">
-        <img src={user?.avatar || "./avatar.png"} alt="" />
+        <img src={user?.id.avatar || "./avatar.png"} alt="" />
         <h2>{user?.username}</h2>
       </div>
       <div className="center"></div>

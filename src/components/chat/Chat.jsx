@@ -108,7 +108,7 @@ function Chat() {
     <div className="chat">
       <div className="top">
         <div className="user">
-          <img src={user?.avatar || "./avatar.png"} alt="" />
+          <img src={user?.id.avatar || "./avatar.png"} alt="" />
           {/* <img src="./avatar.png" alt="" /> */}
           <div className="texts">
             <span>{user?.username}</span>

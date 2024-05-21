@@ -69,7 +69,7 @@ function ChatList() {
           key={chat.chatId}
           onClick={() => handleSelect(chat)}
         >
-          <img src={chat.user.avatar || "./avatar.png"} alt="" />
+          <img src={chat.user.id.avatar || "./avatar.png"} alt="" />
           <div className="texts">
             <span>
               {chat.user.blocked.includes(currentUser.id)
