@@ -1,13 +1,44 @@
 import React from "react";
 import "./detail.css";
-import { auth } from "../../lib/firebase";
+import { auth, db } from "../../lib/firebase";
+import { useChatStore } from "../../lib/chatStore";
+import { useUserStore } from "../../lib/userStore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 function Detail() {
+  const {
+    chatId,
+    user,
+    isCurrentUserBlocked,
+    isReceiverUserBlocked,
+    changeBlock,
+  } = useChatStore();
+
+  const { currentUser } = useUserStore();
+
+  async function handleBlock() {
+    if (!user) {
+      return;
+    }
+    const userDocRef = doc(db, "users", currentUser.id);
+
+    try {
+      await updateDoc(userDocRef, {
+        blocked: isReceiverUserBlocked
+          ? arrayRemove(user.id)
+          : arrayUnion(user.id),
+      });
+      changeBlock();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="detail">
       <div className="user">
-        <img src="./avatar.png" alt="" />
-        <h2>Jane Doe</h2>
+        <img src={user?.avatar || "./avatar.png"} alt="" />
+        <h2>{user?.username}</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
       </div>
       <div className="info">
@@ -39,26 +70,6 @@ function Detail() {
               </div>
               <img src="./download.png" alt="" className="icon" />
             </div>
-            {/* <div className="photoItem">
-              <div className="photoDetails">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZDKwGlc_iK7PdkymLJuarMBmGXGZHKMYqqD39iS34Q&s"
-                  alt=""
-                />
-                <span>photo_2024.png</span>
-              </div>
-              <img src="./download.png" alt="" className="icon" />
-            </div>{" "} */}
-            {/* <div className="photoItem">
-              <div className="photoDetails">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZDKwGlc_iK7PdkymLJuarMBmGXGZHKMYqqD39iS34Q&s"
-                  alt=""
-                />
-                <span>photo_2024.png</span>
-              </div>
-              <img src="./download.png" alt="" className="icon" />
-            </div> */}
           </div>
         </div>
         <div className="option">
@@ -68,7 +79,13 @@ function Detail() {
           </div>
         </div>
         <div className="buttons">
-          <button>Block User</button>
+          <button onClick={handleBlock}>
+            {isCurrentUserBlocked
+              ? "You are blocked"
+              : isReceiverUserBlocked
+              ? "User blocked"
+              : "Block User"}
+          </button>
           <button className="logOut" onClick={() => auth.signOut()}>
             Log Out
           </button>
